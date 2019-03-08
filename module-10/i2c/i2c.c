@@ -1,12 +1,15 @@
+#include <fcntl.h>
 #include <linux/i2c-dev.h>
-#include <i2c/smbus.h>
+#include <linux/i2c.h>
+#include <stdio.h>
 
 int main()
 {
 	int fd;
 	int addr = 0x40;
-	uint8_t reg = 0x10;
-	int32_t res;
+	unsigned char reg = 0x10;
+	unsigned char rx_buffer[10];
+	unsigned char tx_buffer[10];
 
 	// try to open i2c device
 	fd = open("/dev/i2c-0", O_RDWR);
@@ -26,18 +29,21 @@ int main()
 	}
 
 	// data exchange forever
-	print(;;)
+	for (;;)
 	{
-		res = i2c_smbus_read_word_data(fd, reg);
-		
+		// fill the rx buffer
+		tx_buffer[0] = reg;
+		tx_buffer[1] = 0x55;
+		tx_buffer[2] = 0xaa;
+			
 		// read data from addressed register
-		if (res < 0)
+		if (read(fd, rx_buffer, 1) != 1)
 			printf("Failed to read data.\n");
 		else
-			printf("Data read from reg %x is %x", reg, res);
+			printf("Data read from reg %x is %x", reg, rx_buffer[0]);
 
 		// write some data
-		if (i2c_smbus_write_word_data(fd, reg, 0xaa00) < 0)
+		if (write(fd, tx_buffer, 3) != 3)
 			printf("Failed to write data.\n");
 	}
 	

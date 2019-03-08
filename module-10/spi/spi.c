@@ -3,6 +3,8 @@
 #include <sys/ioctl.h>
 #include <linux/types.h>
 #include <linux/spi/spidev.h>
+#include <stdio.h>
+#include <string.h>
 
 int main()
 {
@@ -12,7 +14,8 @@ int main()
 	int mode = 2;
 	int size = 8;
 	int delay = 0;
-	unsigned char buffer = 0xaa;
+	unsigned char rx_buffer;
+	unsigned char tx_buffer = 0xaa;
 	
 	// initialize spi struct
 	memset(&spi, 0, sizeof(spi));
@@ -49,14 +52,16 @@ int main()
 	// exchange data forever
 	for (;;)
 	{
-		spi.tx_buf = (unsigned long)buffer;
-		spi.rx_buf = (unsigned long)buffer;
+		spi.tx_buf = (unsigned long)(&tx_buffer);
+		spi.rx_buf = (unsigned long)(&rx_buffer);
 		spi.len = 1;
-		spi.delay_usec = delay;
+		spi.delay_usecs = delay;
 		spi.speed_hz = speed;
 		spi.bits_per_word = size;
 
 		ioctl(fd, SPI_IOC_MESSAGE(1), &spi);
+		
+		printf("Received data is %x.\n", rx_buffer);
 	}
 	
 	return 0;
