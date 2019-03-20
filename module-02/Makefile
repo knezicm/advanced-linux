@@ -1,10 +1,10 @@
-PROGRAM = blinking 
-CC = arm-linux-gnueabihf-gcc
-CFLAGS = -O2
+PROGRAM = 
+CC = 
+CFLAGS = 
 
-INCLUDE = -I../wiringPi/wiringPi
-LIBS = -lwiringPi
-LIBDIR = -L../lib
+INCLUDE = 
+LIBS = 
+LIBDIR = 
 
 SRC = $(wildcard *.c)
 
