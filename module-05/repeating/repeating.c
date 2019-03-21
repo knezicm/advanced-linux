@@ -22,7 +22,7 @@ int main (void)
 		digitalWrite(0, HIGH);
 		delay(120);
 		digitalWrite(0, LOW);
-		delay(30000);
+		delay(300);
 	}
 
 	return 0;

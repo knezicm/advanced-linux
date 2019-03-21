@@ -8,9 +8,9 @@ int main (void)
 	for (;;)
 	{
 		digitalWrite(0, HIGH);
-		delay(500);
+		delay(50);
 		digitalWrite(0, LOW);
-		delay(500);
+		delay(50);
 	}
 
 	return 0;
