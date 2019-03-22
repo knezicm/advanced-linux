@@ -9,3 +9,6 @@ echo 1 > /sys/class/gpio/gpio17/value
 
 # set the pin to low
 echo 0 > /sys/class/gpio/gpio17/value
+
+# unexport gpio pin BCM17
+echo 17 > /sys/class/gpio/unexport
