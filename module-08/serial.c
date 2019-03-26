@@ -32,7 +32,8 @@ int main ()
 	// set the speed
 	cfsetispeed(&config, B9600);
 	cfsetospeed(&config, B9600);
-
+	
+	// blocking read
 	config.c_cc[VMIN] = 1;
 	config.c_cc[VTIME] = 0;
 
